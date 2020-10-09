@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      .ratingC {
+        text-align: center;
+      }
+      .checked {
+        color: orange;
+      }
+    </style>
+    <title>Star Rating</title>
+  </head>
+  <body>
+    <div class="ratingC"></div>
+    <div class="ratingC"></div>
+    <div class="ratingC"></div>
+    <div class="ratingC"></div>
+    <div class="ratingC"></div>
+
+    <script>
+      let rating = [3, 4, 1, 3, 2];
+
+      let ratingC = document.querySelectorAll(".ratingC");
+      for (let i = 0; i < rating.length; i++) {
+        ratingC[i].innerHTML = `
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+        `;
+
+        let star = ratingC[i].children;
+        for (let j = 0; j < rating[i]; j++) {
+          star[j].classList.add("checked");
+        }
+      }
+    </script>
+  </body>
+</html>

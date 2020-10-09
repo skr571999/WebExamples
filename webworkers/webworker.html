@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Webworker Demo</title>
+  </head>
+  <body>
+    <h1>Webworker demo</h1>
+
+    <script>
+      let w;
+      if (typeof Worker !== "undefined") {
+        console.log("Web workers are supported by the browser");
+
+        if (typeof w == "undefined") {
+          w = new Worker("myworker.js");
+
+          // getting the data sent by the worker file
+          w.onmessage = event => {
+            console.log(event.data);
+          };
+
+          // terminating the web worker after 10 seconds
+          setTimeout(stopWorker, 5000);
+        }
+      } else {
+        console.log("web workers are not supported by the browser");
+      }
+
+      function stopWorker() {
+        w.terminate();
+        w = undefined;
+        console.log("Worker terminated");
+      }
+    </script>
+  </body>
+</html>

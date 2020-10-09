@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Server Sent Event - Demo</title>
+  </head>
+  <body>
+    <h1>Server Sent Event - Demo</h1>
+
+    <script>
+      const evntSource = new EventSource("http://localhost:3000/sse");
+      evntSource.onmessage = e => {
+        console.log(e.data);
+      };
+
+      setTimeout(() => {
+        console.log("SSE closed");
+        evntSource.close();
+      }, 10000);
+    </script>
+  </body>
+</html>

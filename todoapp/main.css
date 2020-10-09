@@ -1,0 +1,92 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background-color: rgb(235, 235, 235);
+}
+h1 {
+  font-weight: lighter;
+  margin: 0.5em;
+  text-align: center;
+}
+.mainContainer {
+  display: flex;
+  justify-content: center;
+}
+.container {
+  padding: 1em;
+  font-size: 1.5em;
+  width: 30em;
+  color: rgb(122, 122, 122);
+}
+.todoFormContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: rgb(54, 54, 54);
+}
+.todoFormContainer #todo {
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0 2px black;
+  border: none;
+  font-size: 1em;
+  border-radius: 3px;
+  padding: 0.3em;
+}
+.todoFormContainer .addBtn {
+  background-color: rgb(255, 255, 255);
+  border: none;
+  padding: 0.5em;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.253);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: 0.05s ease-in;
+}
+.todoFormContainer .addBtn:hover {
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.178);
+  transform: scale(1.1);
+}
+.todoFormContainer .addBtn:active {
+  transform: scale(1);
+}
+input,
+button {
+  font-size: 1em;
+}
+.todoContainer {
+  padding: 1em 0;
+}
+.todoContainer > ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0.5em;
+}
+.todoContainer > ul > li {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #fff;
+  margin: 0.6em 0;
+  padding: 0.4em;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.452);
+  border-radius: 5px;
+  transition: 0.1s ease-in;
+}
+.todoContainer > ul > li:hover {
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.356);
+  color: rgb(68, 68, 68);
+}
+
+.todoContainer > ul > li button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+}
+input,
+button:focus {
+  outline: none;
+}
+.done {
+  text-decoration: line-through;
+}
