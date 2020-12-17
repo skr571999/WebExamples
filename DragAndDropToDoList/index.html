@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Drag And Drop Demo</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+    }
+
+    img {
+      width: 5em;
+    }
+
+    ul {
+      height: 20em;
+      padding: 10px;
+      border: 1px solid #aaaaaa;
+      list-style-type: none;
+      transition: .2s ease-in-out;
+      overflow: auto;
+    }
+
+    li {
+      margin: 1em;
+      padding: .5em;
+      border-radius: 5px;
+      font-size: 1.2em;
+      cursor: all-scroll;
+      transition: .2s ease-in-out;
+      color: rgb(255, 255, 255);
+    }
+
+    #div1 li {
+      background-color: rgb(255, 151, 151);
+      box-shadow: 0 0 5px 2px rgb(255, 207, 207);
+      text-shadow: 0 0 3px rgb(252, 45, 45);
+    }
+
+    #div2 li {
+      background-color: rgb(151, 255, 156);
+      box-shadow: 0 0 5px 2px rgb(207, 255, 219);
+      text-shadow: 0 0 3px rgb(45, 252, 90);
+    }
+
+    #div3 li {
+      background-color: rgb(255, 242, 121);
+      box-shadow: 0 0 5px 2px rgb(248, 255, 207);
+      text-shadow: 0 0 3px rgb(248, 252, 45);
+    }
+
+    li:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+
+<body>
+  <h1>To-Do List</h1>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 row justify-content-around" style="height: 5em;">
+        <div>
+          <input id="taskInput" type="text" class="form-control d-inline-block" placeholder="Task">
+        </div>
+        <div>
+          <button id="addButton" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+      <div class="col-4" id="div1">
+        <h2>To-Do</h2>
+        <ul id="todoList" ondrop="drop(event, this)" ondragover="allowDrop(event)">
+          <li id="drag1" draggable="true" ondragstart="drag(event)">Task 1</li>
+        </ul>
+      </div>
+
+      <div class="col-4" id="div2">
+        <h2>DONE</h2>
+        <ul id="doneList" ondrop="drop(event, this)" ondragover="allowDrop(event)">
+          <li id="drag2" draggable="true" ondragstart="drag(event)">Task 2</li>
+        </ul>
+      </div>
+
+      <div class="col-4" id="div3">
+        <h2>Pending</h2>
+        <ul id="doneList" ondrop="drop(event, this)" ondragover="allowDrop(event)">
+          <li id="drag3" draggable="true" ondragstart="drag(event)">Task 3</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function allowDrop(event) {
+      event.preventDefault();
+    }
+
+    function drag(event) {
+      event.dataTransfer.setData("text", event.target.id);
+    }
+
+    function drop(event, elem) {
+      event.preventDefault();
+      const data = event.dataTransfer.getData("text");
+      const dropElem = document.getElementById(data)
+      elem.appendChild(dropElem);
+    }
+
+    const taskInputElem = document.querySelector("#taskInput")
+    const addButtonElem = document.querySelector("#addButton")
+    const todoListElem = document.querySelector("#todoList")
+    const doneListElem = document.querySelector("#doneList")
+
+    const handleTaskAddClick = (event) => {
+      const value = taskInputElem.value
+      if (!value) return;
+      const id = todoListElem.children.length + doneListElem.children.length
+
+      const elemStr = `<li id="drag${id + 1}" draggable="true" ondragstart="drag(event)">${value}</li>`
+
+      todoListElem.innerHTML = todoListElem.innerHTML + elemStr
+      // todoListElem.append(elemStr);
+    }
+
+
+    addButtonElem.addEventListener('click', handleTaskAddClick)
+  </script>
+</body>
+
+</html>

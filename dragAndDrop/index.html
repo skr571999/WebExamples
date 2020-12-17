@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Drag And Drop Demo</title>
+  <style>
+    img {
+      width: 5em;
+    }
+
+    #div1,
+    #div2 {
+      width: 10em;
+      height: 10em;
+      padding: 10px;
+      border: 1px solid #aaaaaa;
+    }
+  </style>
+</head>
+
+<body>
+  <p>Drag the image into the rectangle:</p>
+
+  <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <h2>Box 1</h2>
+  </div>
+
+  <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <h2>Box 2</h2>
+    <img id="drag1" src="K.png" draggable="true" ondragstart="drag(event)" />
+  </div>
+  <br />
+
+  <script>
+    function allowDrop(event) {
+      event.preventDefault();
+    }
+
+    function drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      let data = ev.dataTransfer.getData("text");
+      ev.target.appendChild(document.getElementById(data));
+    }
+  </script>
+</body>
+
+</html>
