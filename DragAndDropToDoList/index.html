@@ -87,7 +87,7 @@
 
       <div class="col-4" id="div3">
         <h2>Pending</h2>
-        <ul id="doneList" ondrop="drop(event, this)" ondragover="allowDrop(event)">
+        <ul id="pendingList" ondrop="drop(event, this)" ondragover="allowDrop(event)">
           <li id="drag3" draggable="true" ondragstart="drag(event)">Task 3</li>
         </ul>
       </div>
@@ -114,11 +114,12 @@
     const addButtonElem = document.querySelector("#addButton")
     const todoListElem = document.querySelector("#todoList")
     const doneListElem = document.querySelector("#doneList")
+    const pendingListElem = document.querySelector("#pendingList")
 
     const handleTaskAddClick = (event) => {
       const value = taskInputElem.value
       if (!value) return;
-      const id = todoListElem.children.length + doneListElem.children.length
+      const id = todoListElem.children.length + doneListElem.children.length + pendingListElem.children.length
 
       const elemStr = `<li id="drag${id + 1}" draggable="true" ondragstart="drag(event)">${value}</li>`
 
