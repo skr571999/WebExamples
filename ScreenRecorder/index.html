@@ -48,22 +48,28 @@
         const clear = document.getElementById("clear");
 
         const video = document.querySelector("video");
-        let recorder, stream;
+        let recorder, stream, audioStream;
 
         const stopRecording = () => {
             stop.setAttribute("disabled", true);
             start.removeAttribute("disabled");
 
             if (recorder.state !== 'inactive') recorder.stop();
-            if (stream.getVideoTracks()[0].state !== 'inactive') stream.getVideoTracks()[0].stop();
+            if (stream.getVideoTracks()[0].state !== 'inactive') {
+                stream.getVideoTracks()[0].stop()
+                audioStream.getAudioTracks()[0].stop()
+            }
         }
 
         async function startRecording() {
             stream = await navigator.mediaDevices.getDisplayMedia({
-                audio: true,
                 video: { mediaSource: "screen" },
+                // audio: true
             });
-            recorder = new MediaRecorder(stream);
+
+            audioStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true })
+            const AV_Stream = new MediaStream([...stream.getTracks(), ...audioStream.getAudioTracks()])
+            recorder = new MediaRecorder(AV_Stream);
 
             const chunks = [];
             recorder.ondataavailable = e => chunks.push(e.data);
