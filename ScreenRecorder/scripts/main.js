@@ -4,8 +4,9 @@ const saveElem = document.getElementById("save");
 const clearElem = document.getElementById("clear");
 const videoElem = document.querySelector("video");
 const durationElem = document.querySelector("#duration");
+const recordAudioCheckBoxElem = document.querySelector("#recordAudioCheckBox");
 
-let recorder, screenStream, audioStream, durationInterval;
+let recorder, durationInterval;
 
 const stopRecording = () => {
   stopELem.setAttribute("disabled", true);
@@ -14,30 +15,62 @@ const stopRecording = () => {
   clearInterval(durationInterval);
 
   if (recorder.state !== "inactive") recorder.stop();
-  if (screenStream.getVideoTracks()[0].state !== "inactive") {
-    screenStream.getVideoTracks()[0].stop();
-    audioStream.getAudioTracks()[0].stop();
+  recorder.stream.getTracks().forEach((_track) => _track.stop());
+};
+
+const startScreenCapture = async () => {
+  let captureStream = null;
+
+  try {
+    captureStream = await navigator.mediaDevices.getDisplayMedia({
+      video: { mediaSource: "screen" },
+    });
+  } catch (err) {
+    console.error("Error: " + err);
   }
+  return captureStream;
+};
+
+const startAudioRecording = async () => {
+  let audioStream = null;
+
+  try {
+    audioStream = await navigator.mediaDevices.getUserMedia({
+      video: false,
+      audio: true,
+    });
+  } catch (err) {
+    console.error("Error: " + err);
+  }
+
+  return audioStream;
 };
 
 const startRecording = async () => {
-  startElem.setAttribute("disabled", true);
-  stopELem.removeAttribute("disabled");
+  const recordAudio = recordAudioCheckBoxElem.checked;
+  const recordScreen = true;
 
-  screenStream = await navigator.mediaDevices.getDisplayMedia({
-    video: { mediaSource: "screen" },
-    // audio: true
-  });
+  const stream = new MediaStream();
 
-  audioStream = await navigator.mediaDevices.getUserMedia({
-    video: false,
-    audio: true,
-  });
-  const AV_Stream = new MediaStream([
-    ...screenStream.getTracks(),
-    ...audioStream.getAudioTracks(),
-  ]);
-  recorder = new MediaRecorder(AV_Stream);
+  if (recordAudio) {
+    const _audioStream = await startAudioRecording();
+
+    if (_audioStream) {
+      const _audioTracks = _audioStream.getAudioTracks();
+      if (_audioTracks.length > 0) stream.addTrack(_audioTracks[0]);
+    }
+  }
+
+  if (recordScreen) {
+    const _screenStream = await startScreenCapture();
+
+    if (_screenStream) {
+      const _screenTracks = _screenStream.getTracks();
+      if (_screenTracks.length > 0) stream.addTrack(_screenTracks[0]);
+    }
+  }
+
+  recorder = new MediaRecorder(stream);
 
   const chunks = [];
 
@@ -51,14 +84,20 @@ const startRecording = async () => {
     saveElem.removeAttribute("disabled");
   };
 
-  recorder.start();
+  recorder.onstart = () => {
+    startElem.setAttribute("disabled", true);
+    stopELem.removeAttribute("disabled");
+    saveElem.setAttribute("disabled", true);
+    videoElem.src = "";
 
-  const _startTime = new Date().getTime();
+    const _startTime = new Date().getTime();
+    durationInterval = setInterval(() => {
+      const _currentTime = new Date().getTime();
+      durationElem.innerHTML = `${(_currentTime - _startTime) / 1000}`;
+    }, 100);
+  };
 
-  durationInterval = setInterval(() => {
-    const _currentTime = new Date().getTime();
-    durationElem.innerHTML = `${(_currentTime - _startTime) / 1000} seconds`;
-  }, 100);
+  if (recorder.stream.getTracks().length > 0) recorder.start();
 };
 
 const saveRecording = () => {
