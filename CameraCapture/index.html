@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Capture</title>
+
+    <link rel="stylesheet" href="./../assets/styles/bootstrap.min.css">
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> -->
+</head>
+
+<body>
+    <nav class="navbar navbar-light" style="background-color: #00e08a;">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white">
+                Camera<b>Capture</b>
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row justify-content-around">
+            <button id="start" class="col-5 col-sm-4 col-lg-2 mt-3 btn btn-outline-success">Start</button>
+            <button id="stop" class="col-5 col-sm-4 col-lg-2 mt-3 btn btn-outline-danger">Stop</button>
+        </div>
+
+        <div class="container-fluid mt-3">
+            <video controls class="w-100" id="video"></video>
+        </div>
+    </div>
+
+    <script>
+        const videoElem = document.querySelector('#video');
+        const startElem = document.querySelector('#start');
+        const stopElem = document.querySelector('#stop');
+
+        let mediaStream;
+
+        const startRecording = async () => {
+            let stream = null;
+
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: true,
+                });
+            } catch (err) {
+                console.log(err.name + ": " + err.message);
+            }
+
+            return stream;
+        };
+
+        const handleStart = async () => {
+            if (mediaStream && mediaStream.active) return;
+            mediaStream = await startRecording();
+
+            videoElem.srcObject = mediaStream;
+            videoElem.onloadedmetadata = (e) => videoElem.play();
+        }
+
+        const handleStop = () => {
+            mediaStream.getTracks().forEach(_track => _track.stop())
+        }
+
+        startElem.addEventListener('click', handleStart)
+        stopElem.addEventListener('click', handleStop)
+    </script>
+</body>
+
+</html>
