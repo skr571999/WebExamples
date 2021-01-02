@@ -1,21 +1,19 @@
-const startElem = document.getElementById("start");
-const stopELem = document.getElementById("stop");
-const saveElem = document.getElementById("save");
-const clearElem = document.getElementById("clear");
-const videoElem = document.querySelector("video");
+const startElem = document.querySelector("#start");
+const stopELem = document.querySelector("#stop");
+const saveElem = document.querySelector("#save");
+const clearElem = document.querySelector("#clear");
+
 const durationElem = document.querySelector("#duration");
+const outputContainerElem = document.querySelector("#outputContainer");
 const recordAudioCheckBoxElem = document.querySelector("#recordAudioCheckBox");
+const captureScreenCheckBoxElem = document.querySelector(
+  "#captureScreenCheckBox"
+);
 
 let recorder, durationInterval;
 
 const stopRecording = () => {
-  stopELem.setAttribute("disabled", true);
-  startElem.removeAttribute("disabled");
-
-  clearInterval(durationInterval);
-
   if (recorder.state !== "inactive") recorder.stop();
-  recorder.stream.getTracks().forEach((_track) => _track.stop());
 };
 
 const startScreenCapture = async () => {
@@ -48,7 +46,11 @@ const startAudioRecording = async () => {
 
 const startRecording = async () => {
   const recordAudio = recordAudioCheckBoxElem.checked;
-  const recordScreen = true;
+  const recordScreen = captureScreenCheckBoxElem.checked;
+  if (!recordAudio && !recordScreen) {
+    alert("Nothing to Record, Select any of the checkbox");
+    return;
+  }
 
   const stream = new MediaStream();
 
@@ -75,34 +77,85 @@ const startRecording = async () => {
   const chunks = [];
 
   recorder.ondataavailable = (e) => chunks.push(e.data);
-  recorder.onstop = () => {
-    stopRecording();
 
-    const completeBlob = new Blob(chunks, { type: "video/mp4" });
-    videoElem.src = URL.createObjectURL(completeBlob);
-
-    saveElem.removeAttribute("disabled");
-  };
-
-  recorder.onstart = () => {
-    startElem.setAttribute("disabled", true);
-    stopELem.removeAttribute("disabled");
-    saveElem.setAttribute("disabled", true);
-    videoElem.src = "";
-
-    const _startTime = new Date().getTime();
-    durationInterval = setInterval(() => {
-      const _currentTime = new Date().getTime();
-      durationElem.innerHTML = `${(_currentTime - _startTime) / 1000}`;
-    }, 100);
-  };
+  recorder.onstop = () => handleRecordingOnStop(chunks);
+  recorder.onstart = handleRecordingOnStart;
 
   if (recorder.stream.getTracks().length > 0) recorder.start();
 };
 
+const handleRecordingOnStop = (chunks) => {
+  if (!chunks && chunks.length === undefined && chunks.length === 0) return;
+  stopRecording();
+
+  clearInterval(durationInterval);
+  recorder.stream.getTracks().forEach((_track) => _track.stop());
+
+  const finalType =
+    chunks[0].type === "video/webm;codecs=vp8,opus" ||
+    chunks[0].type === "video/webm;codecs=vp8"
+      ? "video/mp4"
+      : chunks[0].type === "audio/webm;codecs=opus"
+      ? "audio/mp3"
+      : "";
+
+  if (finalType) {
+    const completeBlob = new Blob(chunks, { type: finalType });
+
+    const _mediaElem =
+      finalType === "video/mp4" ? getVideoElement() : getAudioElement();
+    _mediaElem.src = URL.createObjectURL(completeBlob);
+    outputContainerElem.innerHTML = "";
+    outputContainerElem.appendChild(_mediaElem);
+  }
+
+  startElem.removeAttribute("disabled");
+  stopELem.setAttribute("disabled", true);
+  saveElem.removeAttribute("disabled");
+};
+
+const getVideoElement = () => {
+  const _videoElem = document.createElement("video");
+  _videoElem.classList.add("w-100");
+  _videoElem.setAttribute("controls", true);
+  _videoElem.setAttribute("autoplay", true);
+
+  return _videoElem;
+};
+
+const getAudioElement = () => {
+  const _audioElem = document.createElement("audio");
+  _audioElem.classList.add("w-100");
+  _audioElem.setAttribute("controls", true);
+  _audioElem.setAttribute("autoplay", true);
+
+  return _audioElem;
+};
+
+const handleRecordingOnStart = () => {
+  startElem.setAttribute("disabled", true);
+  stopELem.removeAttribute("disabled");
+  saveElem.setAttribute("disabled", true);
+
+  const _startTime = new Date().getTime();
+  durationInterval = setInterval(() => {
+    const _currentTime = new Date().getTime();
+    durationElem.innerHTML = `${(_currentTime - _startTime) / 1000}`;
+  }, 100);
+};
+
 const saveRecording = () => {
   const _aElem = document.createElement("a");
-  _aElem.href = videoElem.src;
+  const _videoElem = outputContainerElem.querySelector("video");
+  const _audioElem = outputContainerElem.querySelector("audio");
+
+  if (_videoElem) {
+    _aElem.href = _videoElem.src;
+  } else if (_audioElem) {
+    _aElem.href = _audioElem.src;
+  } else {
+    return;
+  }
 
   const dateStr = new Date().toDateString();
   const fileName = `${
