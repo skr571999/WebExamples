@@ -34,6 +34,9 @@
                 Clear Recording
             </button>
         </div>
+        <div class="row">
+            <p>Recording Duration - <span id="duration">0:0</span></p>
+        </div>
         <div class="row justify-content-center mt-5">
             <div class="col-12 col-md-10">
                 <video class="w-100" autoplay controls />
@@ -41,76 +44,7 @@
         </div>
     </div>
 
-    <script>
-        const start = document.getElementById("start");
-        const stop = document.getElementById("stop");
-        const save = document.getElementById("save");
-        const clear = document.getElementById("clear");
-
-        const video = document.querySelector("video");
-        let recorder, stream, audioStream;
-
-        const stopRecording = () => {
-            stop.setAttribute("disabled", true);
-            start.removeAttribute("disabled");
-
-            if (recorder.state !== 'inactive') recorder.stop();
-            if (stream.getVideoTracks()[0].state !== 'inactive') {
-                stream.getVideoTracks()[0].stop()
-                audioStream.getAudioTracks()[0].stop()
-            }
-        }
-
-        async function startRecording() {
-            stream = await navigator.mediaDevices.getDisplayMedia({
-                video: { mediaSource: "screen" },
-                // audio: true
-            });
-
-            audioStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true })
-            const AV_Stream = new MediaStream([...stream.getTracks(), ...audioStream.getAudioTracks()])
-            recorder = new MediaRecorder(AV_Stream);
-
-            const chunks = [];
-            recorder.ondataavailable = e => chunks.push(e.data);
-            recorder.onstop = e => {
-                stopRecording();
-
-                const completeBlob = new Blob(chunks, { type: "video/mp4" });
-                video.src = URL.createObjectURL(completeBlob);
-
-                save.removeAttribute("disabled");
-            };
-
-            recorder.start();
-        }
-
-        save.addEventListener('click', () => {
-            const aElem = document.createElement('a');
-            aElem.href = video.src;
-            const dateStr = new Date().toDateString()
-            const fileName = (prompt("Enter name of File for Saving") || "Screen Recording") + " - " + dateStr
-            aElem.download = fileName;
-            aElem.click()
-        })
-
-        clear.addEventListener("click", () => {
-            const _clear = confirm("You will loss your recording. Do you want to continue ?")
-            if (_clear) location.reload()
-        })
-
-        start.addEventListener("click", () => {
-            start.setAttribute("disabled", true);
-            stop.removeAttribute("disabled");
-
-            startRecording();
-        });
-
-        stop.addEventListener("click", stopRecording);
-
-
-
-    </script>
+    <script src="./scripts/main.js"></script>
 </body>
 
 </html>
