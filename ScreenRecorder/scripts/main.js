@@ -91,13 +91,11 @@ const handleRecordingOnStop = (chunks) => {
   clearInterval(durationInterval);
   recorder.stream.getTracks().forEach((_track) => _track.stop());
 
-  const finalType =
-    chunks[0].type === "video/webm;codecs=vp8,opus" ||
-    chunks[0].type === "video/webm;codecs=vp8"
-      ? "video/mp4"
-      : chunks[0].type === "audio/webm;codecs=opus"
-      ? "audio/mp3"
-      : "";
+  const finalType = chunks[0].type.startsWith("video")
+    ? "video/mp4"
+    : chunks[0].type.startsWith("audio")
+    ? "audio/mp3"
+    : "";
 
   if (finalType) {
     const completeBlob = new Blob(chunks, { type: finalType });
