@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Digital Clock</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: rgb(235, 235, 235);
+      height: 100vh;
+    }
+
+    nav {
+      height: 5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      font-size: 2rem;
+      display: inline-block;
+    }
+
+    .stopWatchContainer {
+      padding: 1rem 0;
+      background-color: #fff;
+      height: 80%;
+    }
+
+    #timeContainer {
+      font-size: calc(3rem + 1vw);
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: .6rem 1.2rem;
+      margin: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #696969;
+      text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.596);
+      user-select: none;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.288);
+      background-color: #fff;
+      transform: scale(1.02);
+    }
+
+    button:focus {
+      outline: none;
+      background-color: #fff;
+    }
+
+    button:disabled {
+      color: rgb(182, 182, 182);
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.514);
+    }
+
+    button:disabled:hover {
+      background-color: initial;
+      cursor: not-allowed;
+    }
+
+    button:active {
+      transform: scale(.9);
+      background-color: rgb(235, 235, 235);
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a>Stop<b style="text-transform: uppercase;">Watch</b></a>
+  </nav>
+
+  <div class="stopWatchContainer" style="text-align: center;">
+    <p id="timeContainer">00 : 00 : 00</p>
+
+    <div>
+      <button id="stopBtn" disabled>Stop</button>
+      <button id="startBtn">Start</button>
+      <button id="resetBtn" disabled>Reset</button>
+    </div>
+  </div>
+
+  <script src="./main.js"></script>
+</body>
+
+</html>

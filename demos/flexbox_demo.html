@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Flex Box Demo</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      box-sizing: border-box;
+    }
+    .container{
+      display: flex;
+      background-color: rgb(62, 114, 255);
+      justify-content: center;
+      flex-wrap: wrap;
+      /*flex-direction: row;*/
+      /*flex-flow: column;*//** short hand for direction and wrap  */
+      align-items: center;
+      /*align-content: center;*/
+      height: 20em;
+    }
+    .container div{
+      background-color: rgb(255, 94, 94);
+      padding: 1em;
+      margin: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="flex-grow: 10; height: 6em;">A</div>
+    <div style="flex-shrink: 30; height: 2em;align-self: flex-end;">A</div>
+    <div style="flex-basis: 100px;">A</div>
+  </div>
+</body>
+</html>
