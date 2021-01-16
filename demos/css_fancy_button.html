@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Css Fancy Button</title>
+
+  <style>
+    body {
+      text-align: center;
+    }
+
+    button {
+      padding: 1em;
+      font-family: sans-serif;
+      font-size: 2em;
+      border: 5px solid red;
+      border-radius: 15px;
+      background-color: rgb(98, 255, 98);
+      box-shadow: 5px 5px 5px blue;
+      cursor: pointer;
+      color: white;
+      text-shadow: 0 2px 3px grey;
+      outline: none;
+      transition: .2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.04);
+      transition: 0.1s ease-in;
+      box-shadow: 15px 15px 15px blue;
+    }
+
+    button:active {
+      transform: scale(1.01);
+      transition: 0.1s ease-in;
+      box-shadow: 5px 5px 5px blue;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>CSS Fancy Button</h1>
+  <div class="fancy-button">
+    <button>Fancy Button</button>
+  </div>
+</body>
+
+</html>

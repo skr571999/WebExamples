@@ -2,94 +2,93 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GetCalenderEventUrl</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GetCalenderEventUrl</title>
 
-    <link rel="stylesheet" href="./../assets/styles/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f7f7f7;
-        }
-    </style>
+  <link rel="stylesheet" href="./../assets/styles/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f7f7f7;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>GetCalenderEventUrl</h1>
+  <div class="container">
+    <h1>GetCalenderEventUrl</h1>
 
-        <form id="form1" class="form1">
-            <div class="row justify-content-center">
-                <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <div class="mt-2">
-                        <label for="title" class="form-label">Title</label>
-                        <input id="title" required name="title" type="text" class="form-control" />
-                    </div>
-                    <div class="mt-2">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" name="description" id="description" cols="30"
-                            rows="2"></textarea>
-                    </div>
-                    <div class="mt-2">
-                        <label for="location" class="form-label">Location</label>
-                        <textarea class="form-control" name="location" id="location" cols="30" rows="2"></textarea>
-                    </div>
-                    <div class="mt-2">
-                        <label for="startTime" class="form-label">Start Time</label>
-                        <input id="startTime" name="startTime" type="date" class="form-control" />
-                    </div>
-                    <div class="mt-2">
-                        <label for="endTime" class="form-label">End Time</label>
-                        <input id="endTime" name="endTime" type="date" class="form-control" />
-                    </div>
-                    <div class="mt-2 text-center mt-4">
-                        <button class="btn btn-primary" type="submit">Generate Link</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <div class="text-center mt-3">
-            <a id="eventUrl" target="_blank" class="btn btn-outline-success">Add Event</a>
+    <form id="form1" class="form1">
+      <div class="row justify-content-center">
+        <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+          <div class="mt-2">
+            <label for="title" class="form-label">Title</label>
+            <input id="title" required name="title" type="text" class="form-control" />
+          </div>
+          <div class="mt-2">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" name="description" id="description" cols="30" rows="2"></textarea>
+          </div>
+          <div class="mt-2">
+            <label for="location" class="form-label">Location</label>
+            <textarea class="form-control" name="location" id="location" cols="30" rows="2"></textarea>
+          </div>
+          <div class="mt-2">
+            <label for="startTime" class="form-label">Start Time</label>
+            <input id="startTime" name="startTime" type="date" class="form-control" />
+          </div>
+          <div class="mt-2">
+            <label for="endTime" class="form-label">End Time</label>
+            <input id="endTime" name="endTime" type="date" class="form-control" />
+          </div>
+          <div class="mt-2 text-center mt-4">
+            <button class="btn btn-primary" type="submit">Generate Link</button>
+          </div>
         </div>
+      </div>
+    </form>
+    <div class="text-center mt-3">
+      <a id="eventUrl" target="_blank" class="btn btn-outline-success">Add Event</a>
     </div>
+  </div>
 
-    <script>
-        const formElem = document.querySelector("#form1");
-        const eventUrlElem = document.querySelector("#eventUrl");
-        eventUrlElem.style.display = "none";
+  <script>
+    const formElem = document.querySelector("#form1");
+    const eventUrlElem = document.querySelector("#eventUrl");
+    eventUrlElem.style.display = "none";
 
-        const formatDate = (_dString) => {
-            _dString = new Date(_dString)
-            return `${_dString.getFullYear()}${(_dString.getMonth() + 1 + "").length === 1 ? ("0" + (_dString.getMonth() + 1)) : _dString.getMonth()}${_dString.getDate()}T${_dString.getHours()}${_dString.getMinutes()}${_dString.getSeconds()}Z`
-        }
+    const formatDate = (_dString) => {
+      _dString = new Date(_dString)
+      return `${_dString.getFullYear()}${(_dString.getMonth() + 1 + "").length === 1 ? ("0" + (_dString.getMonth() + 1)) : _dString.getMonth()}${_dString.getDate()}T${_dString.getHours()}${_dString.getMinutes()}${_dString.getSeconds()}Z`
+    }
 
-        formElem.addEventListener('submit', (event) => {
-            event.preventDefault();
+    formElem.addEventListener('submit', (event) => {
+      event.preventDefault();
 
-            const title = formElem.title.value.trim();
-            const description = formElem.description.value.trim();
-            const location = formElem.location.value.trim();
-            const startTime = formatDate(formElem.startTime.value);
-            const endTime = formatDate(formElem.endTime.value);
+      const title = formElem.title.value.trim();
+      const description = formElem.description.value.trim();
+      const location = formElem.location.value.trim();
+      const startTime = formatDate(formElem.startTime.value);
+      const endTime = formatDate(formElem.endTime.value);
 
-            let _url = "https://www.google.com/calendar/render?action=TEMPLATE"
-            if (title) {
-                _url += `&text=${title}`
-            }
-            if (description) {
-                _url += `&details=${description}`
-            }
-            if (location) {
-                _url += `&location=${location}`
-            }
-            if (startTime && endTime) {
-                _url += `&dates=${startTime}%2F${endTime}`
-            }
+      let _url = "https://www.google.com/calendar/render?action=TEMPLATE"
+      if (title) {
+        _url += `&text=${title}`
+      }
+      if (description) {
+        _url += `&details=${description}`
+      }
+      if (location) {
+        _url += `&location=${location}`
+      }
+      if (startTime && endTime) {
+        _url += `&dates=${startTime}%2F${endTime}`
+      }
 
-            eventUrlElem.style.display = "initial";
-            eventUrlElem.setAttribute("href", _url)
-        })
-    </script>
+      eventUrlElem.style.display = "initial";
+      eventUrlElem.setAttribute("href", _url)
+    })
+  </script>
 </body>
 
 </html>
