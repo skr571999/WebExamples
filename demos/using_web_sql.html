@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Using WebSQL</title>
+</head>
+
+<body>
+  <h1>Using WebSQL</h1>
+
+  <script>
+    let db = openDatabase(
+      "mydb",
+      "1.0",
+      "This is a webSQL demo",
+      3 * 1024 * 1024
+    );
+    //check whether the database is created or not.
+    if (!db) {
+      console.log("Database not created");
+    } else {
+      let version = db.version;
+      db.transaction(tran => {
+        tran.executeSql(
+          "CREATE TABLE IF NOT EXISTS Users (id unique, Name, MailID)"
+        );
+        //tran.executeSql('insert into Users (id, Name, MailID) values (?,?,?)', [id, name, MailID]);
+        tran.executeSql(
+          'insert into Users (id, Name, MailID) values (1, "Sibi","sibikv4u@gmail.com")'
+        );
+        tran.executeSql(
+          'insert into Users (id, Name, MailID) values (2, "Aji","ajaybhasy@gmail.com")'
+        );
+        tran.executeSql(
+          'insert into Users (id, Name, MailID) values (3, "Ansu","ansary.ans21@gmail.com")'
+        );
+      });
+      db.transaction(tran => {
+        tran.executeSql("SELECT * FROM Users", [], (tran, data) => {
+          for (i = 0; i < data.rows.length; i++) {
+            console.log(data.rows[i]);
+          }
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>

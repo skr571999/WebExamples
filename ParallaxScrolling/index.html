@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Parallax Scrolling</title>
+
+  <style>
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+    }
+
+    .bgimg-1,
+    .bgimg-2,
+    .bgimg-3 {
+      position: relative;
+      opacity: 0.65;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: repeat;
+      background-size: cover;
+    }
+
+    .bgimg-1 {
+      background-image: url("images/img1.svg");
+      min-height: 100%;
+    }
+
+    .bgimg-2 {
+      background-image: url("images/img2.svg");
+      min-height: 400px;
+    }
+
+    .bgimg-3 {
+      background-image: url("images/img3.svg");
+      min-height: 400px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bgimg-1">SCROLL DOWN</div>
+
+  <div>
+    Parallax scrolling is a web site trend where the background content is
+    moved at a different speed than the foreground content while scrolling.
+  </div>
+
+  <div class="bgimg-2">LESS HEIGHT</div>
+
+  <div>
+    Scroll up and down to really get the feeling of how Parallax Scrolling
+    works.
+  </div>
+
+  <div class="bgimg-3">SCROLL UP</div>
+
+  <div>
+    Scroll up and down to really get the feeling of how Parallax Scrolling
+    works.
+  </div>
+
+  <div class="bgimg-1">COOL!</div>
+</body>
+
+</html>

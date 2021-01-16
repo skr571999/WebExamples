@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Using ZangoDB</title>
+
+  <script src="https://unpkg.com/zangodb@latest/dist/zangodb.min.js"></script>
+</head>
+
+<body>
+  <h1>Using the zangodb</h1>
+  <script>
+    let db = new zango.Db("usingZangoDb", { people: ["age"] });
+    let people = db.collection("people");
+
+    let docs = [
+      { name: "Frank", age: 20 },
+      { name: "Thomas", age: 33 },
+      { name: "Todd", age: 33 },
+      { name: "John", age: 28 },
+      { name: "Peter", age: 33 },
+      { name: "George", age: 28 }
+    ];
+
+    people
+      .insert(docs)
+      .then(() => {
+        return people
+          .find({
+            name: { $ne: "John" },
+            age: { $gt: 20 }
+          })
+          .group({
+            _id: { age: "$age" },
+            count: { $sum: 1 }
+          })
+          .project({
+            _id: 0,
+            age: "$_id.age"
+          })
+          .sort({
+            age: -1
+          })
+          .forEach(doc => console.log("doc:", doc));
+      })
+      .catch(error => console.error(error));
+  </script>
+</body>
+
+</html>
+
+<!-- RESOURCE::: https://github.com/erikolson186/zangodb -->
