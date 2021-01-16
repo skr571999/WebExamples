@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: sans-serif;
@@ -5,10 +9,6 @@ body {
 }
 h1 {
   margin-left: 1em;
-}
-
-* {
-  box-sizing: border-box;
 }
 
 .userContainer {
@@ -27,16 +27,18 @@ h1 {
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.342);
   transition: 0.2s ease;
   opacity: 0.8;
+  border-radius: 5px;
 }
 
 .userContainer > div:hover {
   opacity: 1;
-  transform: scale(1.1);
+  transform: scale(1.01);
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.336);
 }
 
 .userContainer img {
   width: 100%;
+  border-radius: 5px;
 }
 .userContainer .userDetail {
   margin: 0 0.5em;

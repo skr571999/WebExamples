@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Validated UserListApp</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+    }
+
+    .container {
+      padding: 1em;
+    }
+
+    table,
+    th,
+    tr,
+    td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    td,
+    th {
+      padding: 1em;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="formContainer">
+      <form name="registerForm">
+        <p>
+          Name :
+          <input type="text" name="name" required oninput="checkName(event.target)" />
+          <span></span>
+        </p>
+        <p>
+          Email :
+          <input type="email" name="email" required oninput="checkEmail(event.target)" />
+        </p>
+        <p>
+          Password :
+          <input type="password" name="password" required oninput="checkPassword(event.target)" />
+          <span></span>
+        </p>
+        <p>
+          Re Enter Password :
+          <input type="password" name="password2" required oninput="checkPassword2(event.target)" />
+          <span></span>
+        </p>
+        <p>
+          <input type="submit" value="Add User" />
+        </p>
+      </form>
+    </div>
+    <div class="usersContainer">
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Email</td>
+              <td>Password</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ram Kumar</td>
+              <td>ram@g</td>
+              <td>ram</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+
+</html>
