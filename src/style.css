@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "Sriracha";
+  src: url("./Sriracha-Regular.ttf");
+}
+
+body {
+  font-family: sans-serif;
+  color: red;
+}
+
+.hello {
+  color: red;
+  font-family: "Sriracha";
+  font-size: 2rem;
+  background: url("./icon.png");
+}
