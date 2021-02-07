@@ -19,4 +19,6 @@ npm install --save-dev csv-loader xml-loader
 npm install toml yamljs json5 --save-dev
 
 npm run build
+
+npm uninstall css-loader csv-loader json5 style-loader toml xml-loader yamljs
 ```
