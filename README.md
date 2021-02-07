@@ -22,3 +22,11 @@ npm run build
 
 npm uninstall css-loader csv-loader json5 style-loader toml xml-loader yamljs
 ```
+
+## Output Management
+
+```sh
+npm install --save-dev html-webpack-plugin
+
+npm install --save-dev clean-webpack-plugin
+```
