@@ -30,3 +30,15 @@ npm install --save-dev html-webpack-plugin
 
 npm install --save-dev clean-webpack-plugin
 ```
+
+## Development
+
+```sh
+npm run watch
+
+npm install --save-dev webpack-dev-server
+npm start
+
+npm install --save-dev express webpack-dev-middleware
+npm run server
+```
