@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Webpack",
+        "tech": "JavaScript"
+    },
+    {
+        "name": "Spring Boot",
+        "tech": "Java"
+    }
+]

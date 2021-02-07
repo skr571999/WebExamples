@@ -14,5 +14,9 @@ npm run build
 ```sh
 npm install --save-dev style-loader css-loader
 
+npm install --save-dev csv-loader xml-loader
+
+npm install toml yamljs json5 --save-dev
+
 npm run build
 ```
