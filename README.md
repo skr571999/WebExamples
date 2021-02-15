@@ -1,4 +1,4 @@
-# Dummy Webpack Demo
+# Try Webpack
 
 ## Getting Started
 
