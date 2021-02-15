@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DelayArrayLoopIteration</title>
+</head>
+
+<body>
+  <h1>DelayArrayLoopIteration</h1>
+  <h2>Resource : </h2>
+  <a
+    href="https://travishorn.com/delaying-foreach-iterations-2ebd4b29ad30">https://travishorn.com/delaying-foreach-iterations-2ebd4b29ad30</a>
+
+  <p id="output"></p>
+  <script>
+
+    const NAMES = [
+      "Alberta",
+      "Barry",
+      "Charley",
+      "Christopher",
+      "Dianne",
+      "Ellen",
+      "Ethel",
+      "James",
+      "Jodee",
+      "Joseph",
+      "Lilia",
+      "Mark",
+      "Mary",
+      "Merri",
+      "Michael",
+      "Mildred",
+      "Randall",
+      "Roy",
+      "Thomas",
+      "Venus"
+    ];
+
+    const output = document.querySelector("#output");
+    const display = s => output.innerText = s;
+
+    const delayLoop = (fn, delay) => (x, i) => {
+      setTimeout(() => {
+        fn(x);
+      }, i * delay);
+
+    };
+
+    NAMES.forEach(delayLoop(display, 1000));
+  </script>
+</body>
+
+</html>
