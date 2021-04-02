@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Captcha</title>
+</head>
+
+<body onload="canvas();">
+  <div class="box">
+    <h1>Testing Captcha</h1>
+    <canvas id="canvas" height="80" width="260"></canvas>
+    <input id="text" type="text"></input>
+    <button id="btn" onclick="canvas();">Refresh</button>
+    <button type="button" value="Check" onclick="ValidCaptcha();">Submit</button>
+  </div>
+
+  <p>
+    Resource: <a href="https://stackoverflow.com/questions/49958268/canvas-background-image-not-showing-on-opening-webpage">https://stackoverflow.com/questions/49958268/canvas-background-image-not-showing-on-opening-webpage</a>
+  </p>
+
+</body>
+<script>
+  var code = {};
+  function canvas() {
+
+    var createdImage = drawImage();
+    //wait till image is loaded then draw canvas
+    createdImage.onload = function () {
+      var canvas = document.getElementById('canvas');
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.drawImage(createdImage, 0, 0);
+      var list = new Array('@', '%', '#', '$', '*', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+      var i;
+      for (i = 0; i < 6; i++) {
+        var a = list[Math.floor(Math.random() * list.length)];
+        var b = list[Math.floor(Math.random() * list.length)];
+        var c = list[Math.floor(Math.random() * list.length)];
+        var d = list[Math.floor(Math.random() * list.length)];
+        var e = list[Math.floor(Math.random() * list.length)];
+        var f = list[Math.floor(Math.random() * list.length)];
+        var g = list[Math.floor(Math.random() * list.length)];
+      }
+      code.value = a + b + c + d + e + f + g;
+
+      ctx.font = "italic 42px verdana";
+      ctx.fillStyle = "#FF9912";
+      ctx.textAlign = "center";
+      ctx.fillText(code.value, canvas.width / 2, canvas.height / 2);
+    }
+
+  }
+
+  var hiddenImg = document.getElementById('loadedImg');
+  window.onLoad = canvas();
+
+
+
+  function ValidCaptcha() {
+    //var string1 = document.getElementById('canvas').value;
+    var string1 = document.getElementById('text').value;
+    var string2 = code.value;
+    if (string1 != null) {
+      if (string1 == string2) {
+        alert("true");
+      } else {
+        alert("false");
+      }
+    }
+  }
+  //Draw image in seprate method
+  function drawImage() {
+    var background = new Image();
+    background.src = "https://rrraul.co/wp-content/uploads/2017/06/projpanel_illust_random-1.jpg";
+
+    return background;
+  }
+
+</script>
+
+</html>
